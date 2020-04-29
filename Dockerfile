@@ -14,8 +14,16 @@ RUN apk --no-cache add --virtual build-dependencies wget ca-certificates && \
     mv prometheus.yml /etc/prometheus/prometheus.yml && \
     mv consoles console_libraries NOTICE LICENSE /usr/share/prometheus/ && \
     ln -s /usr/share/prometheus/console_libraries /usr/share/prometheus/consoles/ /etc/prometheus/ && \
-    rm -rf /tmp/install
+    rm -rf /tmp/install && \
+    mkdir -p /prometheus && \
+    chown -R nobody:nogroup etc/prometheus /prometheus
     
-EXPOSE 9090
-VOLUME [/prometheus]
-CMD ["/bin/prometheus" "--config.file=/etc/prometheus/prometheus.yml" "--storage.tsdb.path=/prometheus" "--web.console.libraries=/usr/share/prometheus/console_libraries" "--web.console.templates=/usr/share/prometheus/consoles"]
+USER       nobody
+EXPOSE     9090
+VOLUME     [ "/prometheus" ]
+WORKDIR    /prometheus
+ENTRYPOINT [ "/bin/prometheus" ]
+CMD        [ "--config.file=/etc/prometheus/prometheus.yml", \
+             "--storage.tsdb.path=/prometheus", \
+             "--web.console.libraries=/usr/share/prometheus/console_libraries", \
+             "--web.console.templates=/usr/share/prometheus/consoles" ]
