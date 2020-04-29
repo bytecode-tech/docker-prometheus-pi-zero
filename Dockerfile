@@ -16,7 +16,7 @@ RUN apk --no-cache add --virtual build-dependencies wget ca-certificates && \
     ln -s /usr/share/prometheus/console_libraries /usr/share/prometheus/consoles/ /etc/prometheus/ && \
     rm -rf /tmp/install && \
     mkdir -p /prometheus && \
-    chown -R nobody:nogroup etc/prometheus /prometheus
+    chown -R nobody:nogroup /etc/prometheus /prometheus
     
 USER       nobody
 EXPOSE     9090
