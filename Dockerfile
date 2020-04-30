@@ -1,7 +1,7 @@
 FROM alpine:3.11
 
 ARG ARCHITECTURE=armv6
-ARG VERSION=2.12.0
+ARG VERSION=2.17.2
 
 RUN apk --no-cache add --virtual build-dependencies wget ca-certificates && \
     mkdir -p /tmp/install /tmp/dist && \
